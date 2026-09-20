@@ -8,3 +8,6 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate # Flyway handles the DDL
+
+springdoc:
+  override-with-generic-response: false
