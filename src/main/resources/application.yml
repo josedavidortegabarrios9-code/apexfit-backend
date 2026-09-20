@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ApexFit
+  profiles:
+    active: ${APP_PROFILE:dev}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate # Flyway handles the DDL
