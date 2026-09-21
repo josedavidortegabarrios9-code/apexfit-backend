@@ -31,6 +31,13 @@ public class EjercicioController {
     public ResponseEntity<EjercicioDto> createEjercicio(@Valid @RequestBody EjercicioDto ejercicioDto) {
         return new ResponseEntity<>(ejercicioService.createEjercicio(ejercicioDto), HttpStatus.CREATED);
     }
+  
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<Page<EjercicioDto>> getEjerciciosByGrupoMuscular(
+        @RequestParam String grupoMuscular, Pageable pageable) {
+    return ResponseEntity.ok(ejercicioService.getByGrupoMuscular(grupoMuscular, pageable));
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<EjercicioDto> updateEjercicio(@PathVariable Integer id, @Valid @RequestBody EjercicioDto ejercicioDto) {

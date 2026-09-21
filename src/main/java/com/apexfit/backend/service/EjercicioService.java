@@ -7,22 +7,31 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EjercicioService {
 
     private final EjercicioRepository ejercicioRepository;
 
+    
+
     public Page<EjercicioDto> getAllEjercicios(Pageable pageable) {
         return ejercicioRepository.findAll(pageable).map(this::mapToDto);
-    }
+    } 
+    
+    
 
     public EjercicioDto getEjercicioById(Integer id) {
         Ejercicio ejercicio = ejercicioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ejercicio no encontrado"));
         return mapToDto(ejercicio);
     }
+    
+
+    
 
     public EjercicioDto createEjercicio(EjercicioDto dto) {
         if (ejercicioRepository.findByNombre(dto.getNombre()).isPresent()) {
@@ -54,6 +63,9 @@ public class EjercicioService {
         ejercicioRepository.delete(ejercicio);
     }
 
+    
+
+
     private EjercicioDto mapToDto(Ejercicio ejercicio) {
         EjercicioDto dto = new EjercicioDto();
         dto.setIdEjercicio(ejercicio.getIdEjercicio());
@@ -70,4 +82,15 @@ public class EjercicioService {
         ejercicio.setVideoUrl(dto.getVideoUrl());
         ejercicio.setNivelDificultad(dto.getNivelDificultad());
     }
+
+    
+    public Page<EjercicioDto> getByGrupoMuscular(String grupoMuscular, Pageable pageable) {
+        log.info("Buscando ejercicios por grupo muscular: {}", grupoMuscular);
+        return ejercicioRepository
+                .findByGrupoMuscularContainingIgnoreCase(grupoMuscular, pageable)
+                .map(this::mapToDto);
+    }
+    
 }
+
+
