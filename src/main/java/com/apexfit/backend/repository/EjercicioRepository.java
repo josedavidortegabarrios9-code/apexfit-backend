@@ -15,4 +15,6 @@ public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
     
     // ✅ AGREGAR ESTO:
     Page<Ejercicio> findByGrupoMuscularContainingIgnoreCase(String grupoMuscular, Pageable pageable);
+
+    Page<Ejercicio> findByNivelDificultadIgnoreCase(String nivelDificultad, Pageable pageable);
 }

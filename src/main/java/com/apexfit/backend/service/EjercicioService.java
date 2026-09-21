@@ -90,6 +90,13 @@ public class EjercicioService {
                 .findByGrupoMuscularContainingIgnoreCase(grupoMuscular, pageable)
                 .map(this::mapToDto);
     }
+
+    public Page<EjercicioDto> getByNivelDificultad(String nivelDificultad, Pageable pageable) {
+        log.info("Buscando ejercicios por nivel de dificultad: {}", nivelDificultad);
+        return ejercicioRepository
+                .findByNivelDificultadIgnoreCase(nivelDificultad, pageable)
+                .map(this::mapToDto);
+    }
     
 }
 
