@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import java.time.LocalDate;
 
@@ -27,6 +28,7 @@ public class UsuarioDto {
     @NotNull(message = "El rol es obligatorio")
     private Integer idRol;
 
+    @Pattern(regexp = "^[0-9]{7,15}$", message = "El teléfono debe tener entre 7 y 15 dígitos")
     private String telefono;
     private LocalDate fechaNacimiento;
     private String estado;
