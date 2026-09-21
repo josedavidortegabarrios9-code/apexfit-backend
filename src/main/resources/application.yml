@@ -11,3 +11,9 @@ spring:
 
 springdoc:
   override-with-generic-response: false
+
+
+logging:
+  level:
+    com.apexfit: INFO
+    org.springframework.web: DEBUG

@@ -1,9 +1,14 @@
 package com.apexfit.backend.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "ejercicio")
@@ -16,6 +21,9 @@ public class Ejercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ejercicio")
     private Integer idEjercicio;
+
+    @Column(name = "descripcion", columnDefinition = "TEXT")
+    private String descripcion;
 
     @Column(unique = true, nullable = false, length = 100)
     private String nombre;
