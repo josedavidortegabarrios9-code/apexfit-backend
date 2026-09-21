@@ -27,6 +27,12 @@ public class UsuarioService {
         return mapToDto(usuario);
     }
 
+    public UsuarioDto getUsuarioByCorreo(String correo) {
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con correo: " + correo));
+        return mapToDto(usuario);
+    }
+
     public UsuarioDto createUsuario(UsuarioDto dto) {
         if (usuarioRepository.findByCorreo(dto.getCorreo()).isPresent()) {
             throw new RuntimeException("El correo ya está en uso");
