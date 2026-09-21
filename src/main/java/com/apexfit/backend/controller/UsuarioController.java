@@ -27,6 +27,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.getUsuarioById(id));
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<UsuarioDto> getUsuarioByCorreo(@RequestParam String correo) {
+        return ResponseEntity.ok(usuarioService.getUsuarioByCorreo(correo));
+    }
+
     @PostMapping
     public ResponseEntity<UsuarioDto> createUsuario(@Valid @RequestBody UsuarioDto usuarioDto) {
         return new ResponseEntity<>(usuarioService.createUsuario(usuarioDto), HttpStatus.CREATED);
