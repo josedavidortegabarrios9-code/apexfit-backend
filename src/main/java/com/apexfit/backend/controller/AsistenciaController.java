@@ -1,0 +1,50 @@
+package com.apexfit.backend.controller;
+
+import com.apexfit.backend.dto.AsistenciaDto;
+import com.apexfit.backend.service.AsistenciaService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/asistencias")
+@RequiredArgsConstructor
+public class AsistenciaController {
+
+    private final AsistenciaService asistenciaService;
+
+    @GetMapping
+    public ResponseEntity<List<AsistenciaDto>> getAll() {
+        return ResponseEntity.ok(asistenciaService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AsistenciaDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(asistenciaService.getById(id));
+    }
+
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<AsistenciaDto>> getByUsuario(@PathVariable Integer idUsuario) {
+        return ResponseEntity.ok(asistenciaService.getByUsuario(idUsuario));
+    }
+
+    @PostMapping
+    public ResponseEntity<AsistenciaDto> create(@Valid @RequestBody AsistenciaDto dto) {
+        return new ResponseEntity<>(asistenciaService.create(dto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AsistenciaDto> update(@PathVariable Long id, @Valid @RequestBody AsistenciaDto dto) {
+        return ResponseEntity.ok(asistenciaService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        asistenciaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}

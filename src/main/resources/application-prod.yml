@@ -13,3 +13,8 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+
+apexfit:
+  app:
+    jwtSecret: ${JWT_SECRET:ApexFitSecretKeyMustBeAtLeast32BytesLongForHS256Algorithm}
+    jwtExpirationMs: 86400000  # 24 horas

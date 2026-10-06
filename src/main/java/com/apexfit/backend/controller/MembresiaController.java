@@ -1,0 +1,50 @@
+package com.apexfit.backend.controller;
+
+import com.apexfit.backend.dto.MembresiaDto;
+import com.apexfit.backend.service.MembresiaService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/membresias")
+@RequiredArgsConstructor
+public class MembresiaController {
+
+    private final MembresiaService membresiaService;
+
+    @GetMapping
+    public ResponseEntity<List<MembresiaDto>> getAll() {
+        return ResponseEntity.ok(membresiaService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MembresiaDto> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(membresiaService.getById(id));
+    }
+
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<MembresiaDto>> getByUsuario(@PathVariable Integer idUsuario) {
+        return ResponseEntity.ok(membresiaService.getByUsuario(idUsuario));
+    }
+
+    @PostMapping
+    public ResponseEntity<MembresiaDto> create(@Valid @RequestBody MembresiaDto dto) {
+        return new ResponseEntity<>(membresiaService.create(dto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MembresiaDto> update(@PathVariable Integer id, @Valid @RequestBody MembresiaDto dto) {
+        return ResponseEntity.ok(membresiaService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        membresiaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}

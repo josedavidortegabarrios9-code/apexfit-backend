@@ -15,6 +15,18 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage(),
+                null
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
@@ -24,14 +36,6 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 null
         );
-        
-        // If it's a "Not found" message, we can return 404
-        if (ex.getMessage() != null && ex.getMessage().toLowerCase().contains("no encontrado")) {
-            errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
-            errorResponse.setError(HttpStatus.NOT_FOUND.getReasonPhrase());
-            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-        }
-
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
